@@ -24,9 +24,7 @@ public class ExtractTest {
     private static final Tweet tweet6 = new Tweet(6, "yukio", "@alyssa@mit.com how's life in the big leagues? Does it live to your expectations?", d1); //wrong format for mention
     private static final Tweet tweet7 = new Tweet(7, "rin", "@yukio I'm using this network too. @YUKIO MY CAPS IS BROKEN. @YukIO!! ", d1); //rendundant mention of the same user
     private static final Tweet tweet8 = new Tweet(8, "kaneki", "An array of good and bad usernames like @Good_One55, @1337-mAn, and not so good ones too like $$himmy, SuperNova**99, ~OldName", d2);
-    
-    
-    
+
     @Test(expected=AssertionError.class)
     public void testAssertionsEnabled() {
         assert false; // make sure assertions are enabled with VM argument: -ea
@@ -39,7 +37,6 @@ public class ExtractTest {
         assertEquals("expected start", d1, timespan.getStart());
         assertEquals("expected end", d2, timespan.getEnd());
     }
-	    
 	//  get the username from the list of users that come along with the tweets
 	    
 	//	  possible partitions:
@@ -49,13 +46,6 @@ public class ExtractTest {
 	//  	no tweets provided at all (null obj) not catered since its not mentioned in the precondition, doing so would make it stronger and thereby weaken the specification. 
 	//  	redundant cases: the username being case insensitive demands the function keeps the casing uniform
     
-	@Test
-	public void testGetMentionedUsersNoMention() {
-	    Set<String> mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet1, tweet2));
-	    
-	    assertTrue("expected empty set", mentionedUsers.isEmpty());
-	}
-
 	//empty mention, floating '@' character
 	@Test
 	public void testGetMentionedUsersEmptyMention() {
@@ -93,12 +83,18 @@ public class ExtractTest {
 		assertEquals("Extract Legal names and remove illegal ones", Set.of("good_one55", "1337-man"), result);
 	    
 	}
-	
-
+    @Test
+    public void testGetMentionedUsersNoMention() {
+        Set<String> mentionedUsers = Extract.getMentionedUsers(Arrays.asList(tweet1));
+        
+        assertTrue("expected empty set", mentionedUsers.isEmpty());
+    }
+    
 //    get the timestamp from tweet
 //    check all tweets which has the oldest adn the latest one, 
 // check for random edge cases, stuff that kills time like improper formatting
 // sting of connected tweets implied by the timespan of the random tweets is here.
+
     
 //    possible partitions
 //    just one tweet in which its not a time span, rather a localized point with start = end
@@ -118,7 +114,6 @@ public class ExtractTest {
     	List<Tweet> tweets3 = Arrays.asList(tweet1, tweet2, tweet4, tweet5);
     	assertEquals("one tweet", new Timespan(d4, d5) , Extract.getTimespan(tweets3));
     }
-
 
     /*
      * Warning: all the tests you write here must be runnable against any

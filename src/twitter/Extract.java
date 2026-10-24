@@ -93,7 +93,6 @@ public class Extract {
     			// finally add it in the list
     			usernames.add(name.toLowerCase());
     		}
-    		
     	}
     	return usernames;
     }
